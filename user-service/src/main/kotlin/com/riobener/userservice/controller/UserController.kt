@@ -12,8 +12,14 @@ class UserController(
 ) {
 
     @PostMapping("/")
-    fun saveUser(@RequestParam name: String, @RequestParam departmentId: String,): JpaUser {
-        return userService.saveUser(JpaUser(id = UUID.randomUUID(), name = name, departmentId = UUID.fromString(departmentId)))
+    fun saveUser(@RequestParam name: String, @RequestParam departmentId: String): JpaUser {
+        return userService.saveUser(
+            JpaUser(
+                id = UUID.randomUUID(),
+                name = name,
+                departmentId = UUID.fromString(departmentId)
+            )
+        )
     }
 
     @GetMapping("/{id}")
