@@ -11,14 +11,11 @@ import java.util.*
 @RequestMapping("/users")
 class UserController(
     private val userService: UserService,
-    private val tracer: Tracer,
+/*    private val tracer: Tracer,*/
 ) {
 
     @PostMapping("/")
     fun saveUser(@RequestParam name: String, @RequestParam departmentId: String): JpaUser {
-        val sprintSpan: Span = tracer.buildSpan("saveUser")
-            .withTag("name", name).withTag("departmentId", departmentId).start()
-        sprintSpan.finish()
         return userService.saveUser(
             JpaUser(
                 id = UUID.randomUUID(),
@@ -30,9 +27,6 @@ class UserController(
 
     @GetMapping("/{id}")
     fun getUserById(@PathVariable("id") userId: String): JpaUser? {
-        val sprintSpan: Span = tracer.buildSpan("getUserById")
-            .withTag("id", userId).start()
-        sprintSpan.finish()
         return userService.getUser(UUID.fromString(userId))
     }
 }

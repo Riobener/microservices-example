@@ -14,14 +14,14 @@ import java.util.*
 @RequestMapping("/departments")
 class DepartmentController(
     private val departmentService: DepartmentService,
-    private val tracer: Tracer,
+/*    private val tracer: Tracer,*/
 ) {
 
     @PostMapping("/")
     fun saveDepartment(@RequestParam name: String, address: String, code: String): Department {
-        val sprintSpan: Span = tracer.buildSpan("saveDepartment")
+/*        val sprintSpan: Span = tracer.buildSpan("saveDepartment")
             .withTag("name", name).withTag("address", address).withTag("code", code).start()
-        sprintSpan.finish()
+        sprintSpan.finish()*/
         return departmentService.saveDepartment(
             Department(
                 id = UUID.randomUUID(),
@@ -34,9 +34,9 @@ class DepartmentController(
 
     @GetMapping("/{id}")
     fun findDepartmentById(@PathVariable("id") departmentId: String): Department? {
-        val sprintSpan: Span = tracer.buildSpan("findDepartmentById")
+/*        val sprintSpan: Span = tracer.buildSpan("findDepartmentById")
             .withTag("departmentId", departmentId).start()
-        sprintSpan.finish()
+        sprintSpan.finish()*/
         return departmentService.findDepartmentById(UUID.fromString(departmentId))
     }
 }

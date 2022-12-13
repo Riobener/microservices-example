@@ -95,13 +95,10 @@ services:
       - 14250:14250
       - 9411:9411
     depends_on:
-      user-service:
-        condition: service_started
-      department-service:
+      krakend_ce:
         condition: service_started
     links:
-      - user-service
-      - department-service
+      - krakend_ce
 
   grafana:
     build: './config/grafana'
