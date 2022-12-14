@@ -44,6 +44,13 @@
       "endpoint": "/kraken/user/",
       "method": "POST",
       "output_encoding": "json",
+      "extra_config": {
+        "auth/validator": {
+          "alg": "RS256",
+          "jwk_url": "http://host.docker.internal:8484/auth/realms/master/protocol/openid-connect/certs",
+          "disable_jwk_security": true
+        }
+      },
       "backend": [
         {
           "url_pattern": "/users/",
@@ -65,6 +72,13 @@
       "endpoint": "/kraken/department/",
       "method": "POST",
       "output_encoding": "json",
+      "extra_config": {
+        "auth/validator": {
+          "alg": "RS256",
+          "jwk_url": "http://host.docker.internal:8484/auth/realms/master/protocol/openid-connect/certs",
+          "disable_jwk_security": true
+        }
+      },
       "backend": [
         {
           "url_pattern": "/departments/",
@@ -81,6 +95,23 @@
         "name",
         "address",
         "code"
+      ]
+    },
+    {
+      "endpoint": "/kraken/auth/",
+      "method": "POST",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "url_pattern": "/auth/realms/master/protocol/openid-connect/token",
+          "encoding": "json",
+          "sd": "static",
+          "method": "POST",
+          "host": [
+            "http://host.docker.internal:8484"
+          ],
+          "disable_host_sanitize": false
+        }
       ]
     }
   ],

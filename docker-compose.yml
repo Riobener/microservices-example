@@ -137,5 +137,38 @@ services:
       monitoring:
         aliases:
           - prometheus
+
+  keycloak-db:
+    image: 'postgres:latest'
+    container_name: keycloak-db
+    ports:
+      - 5435:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=keycloak
+    networks:
+      - local-keycloak
+
+  keycloak:
+    depends_on:
+      - keycloak-db
+    container_name: local_keycloak
+    environment:
+      DB_VENDOR: postgres
+      DB_ADDR: keycloak-db
+      DB_DATABASE: keycloak
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      KEYCLOAK_USER: admin1
+      KEYCLOAK_PASSWORD: admin1
+    image: jboss/keycloak
+    ports:
+      - "8484:8080"
+    networks:
+      - local-keycloak
+
+
 networks:
   monitoring:
+  local-keycloak:
