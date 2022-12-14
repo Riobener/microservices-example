@@ -85,10 +85,29 @@
     }
   ],
   "extra_config":{
+    "telemetry/metrics": {
+      "collection_time": "30s",
+      "listen_address": ":8090"
+    },
+    "telemetry/influx": {
+      "address": "http://host.docker.internal:8086",
+      "ttl": "25s",
+      "buffer_size": 100,
+      "username": "kraken",
+      "password": "pass"
+    },
     "telemetry/opencensus": {
       "sample_rate": 100,
       "reporting_period": 0,
       "exporters": {
+        "prometheus": {
+          "port": 8091,
+          "namespace": "krakend",
+          "tag_host": false,
+          "tag_path": true,
+          "tag_method": true,
+          "tag_statuscode": false
+        },
         "jaeger": {
           "endpoint": "http://host.docker.internal:14268/api/traces",
           "service_name":"krakend",

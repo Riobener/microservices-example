@@ -73,6 +73,7 @@ services:
       - "1234:1234"
       - "8080:8080"
       - "8090:8090"
+      - "8091:8091"
     depends_on:
       user-service:
         condition: service_started
@@ -97,8 +98,20 @@ services:
     depends_on:
       krakend_ce:
         condition: service_started
+
     links:
       - krakend_ce
+
+  influxdb:
+    image: influxdb:1.8.10
+    environment:
+      - "INFLUXDB_DB=krakend"
+      - "INFLUXDB_USER=kraken"
+      - "INFLUXDB_USER_PASSWORD=pass"
+      - "INFLUXDB_ADMIN_USER=admin"
+      - "INFLUXDB_ADMIN_PASSWORD=admin"
+    ports:
+      - "8086:8086"
 
   grafana:
     build: './config/grafana'
